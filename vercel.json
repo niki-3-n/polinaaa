@@ -1,0 +1,5 @@
+{
+  "buildCommand": "cd polina && npm install && npm run build",
+  "outputDirectory": "polina/.next",
+  "installCommand": "cd polina && npm install"
+} 

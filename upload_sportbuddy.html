@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Загрузка изображения SportBuddy</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; }
+        .upload-form { margin: 20px 0; background: #f5f5f5; padding: 20px; border-radius: 5px; }
+        .btn { background: #4CAF50; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; }
+        .btn:hover { background: #45a049; }
+        .message { padding: 10px; margin: 10px 0; }
+        .success { background-color: #d4edda; color: #155724; }
+        .error { background-color: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <h1>Загрузка изображения SportBuddy</h1>
+    
+    <div class="upload-form">
+        <p>Выберите файл изображения SportBuddy для загрузки:</p>
+        
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="file" id="imageFile" name="imageFile" accept="image/*" required>
+            <br><br>
+            <button type="button" class="btn" id="uploadBtn">Загрузить изображение</button>
+        </form>
+        
+        <div id="message" style="display: none;"></div>
+    </div>
+    
+    <script>
+        document.getElementById('uploadBtn').addEventListener('click', function() {
+            const fileInput = document.getElementById('imageFile');
+            const messageDiv = document.getElementById('message');
+            
+            if (!fileInput.files.length) {
+                messageDiv.className = 'message error';
+                messageDiv.innerText = 'Пожалуйста, выберите файл';
+                messageDiv.style.display = 'block';
+                return;
+            }
+            
+            const file = fileInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // Создаем изображение для проверки размеров
+                const img = new Image();
+                img.onload = function() {
+                    // Сохраняем изображение как sportbuddy.jpg
+                    const link = document.createElement('a');
+                    link.href = e.target.result;
+                    link.download = 'sportbuddy.jpg';
+                    link.click();
+                    
+                    messageDiv.className = 'message success';
+                    messageDiv.innerHTML = 'Изображение успешно сохранено как sportbuddy.jpg!<br><br>' +
+                                         'Теперь переместите его в папку:<br>' +
+                                         '<strong>public/images/projects/</strong><br><br>' +
+                                         'После этого перезагрузите страницу с проектами, удерживая Shift, чтобы очистить кэш.';
+                    messageDiv.style.display = 'block';
+                };
+                img.src = e.target.result;
+            };
+            
+            reader.readAsDataURL(file);
+        });
+    </script>
+</body>
+</html> 

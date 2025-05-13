@@ -1,0 +1,1 @@
+You need to manually save the SportBuddy app image to the path: public/images/projects/sportbuddy.jpg
